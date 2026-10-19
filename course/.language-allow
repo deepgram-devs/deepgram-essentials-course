@@ -1,0 +1,22 @@
+# Locations where the instructor-language check matches something legitimate.
+# One "path:line" per line. Keep this file short: every entry is a place a
+# reader could reasonably think this course expects a room, so each one should
+# be a phrase that only looks like room language.
+#
+# "out loud" is usually the agent speaking, not an attendee reading -- but it
+# is not in the blocklist, so it needs no entry here.
+#
+# Add entries as: steps/07-function-calling/LAB.md:57
+#
+# These line numbers are positional and nothing detects a stale entry. Insert a
+# line above one of these in either file and every number below it is wrong, so
+# recompute them whenever you edit those sections.
+# course/README.md describes what verify_steps.py checks for, so it has to
+# name the thing it forbids.
+course/README.md:60
+# README.md's maintenance section names what verify_steps.py forbids, and the
+# closing note points at the instructor-led workshop this course came from.
+README.md:145
+README.md:159
+README.md:160
+README.md:161

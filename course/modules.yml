@@ -1,0 +1,175 @@
+# The course manifest: the single place module identity, ordering, and
+# expectations are written down.
+#
+# Step folder names are NOT renumbered -- they are load-bearing in
+# verify_steps.py, in every "uv run steps/NN-.../main.py" command, and in every
+# relative link between labs. Display identity lives here instead, and
+# verify_steps.py reads this file so numbering and folders cannot drift apart.
+
+course:
+  id: deepgram-builder-essentials
+  title: "Deepgram Builder Essentials, Technical Track"
+  badge: "Deepgram Builder Essentials, Voice Agent"
+  scenario: course/SCENARIO.md
+  quiz_items_per_module: 5
+  # The badge exam and the module quizzes are not in this repository. They live
+  # in the private teaching repo, whose verifier checks them against the
+  # draft_ids and quiz_count values below.
+  knowledge_check: deepgram-essentials-course-teaching:assessment/KNOWLEDGE_CHECK.yml
+
+modules:
+  - id: M0
+    step_dir: 00-overview
+    title: "Welcome, the loop, and the capstone"
+    draft_ids: [B0, B1]
+    typical_time: 15
+    quiz_count: 5
+    doc_only: true
+    objectives:
+      - Describe what the badge certifies and how the labs build one agent
+      - Name the three models in the loop and which one holds the conversation
+      - Place Flux, Flux TTS, and the Voice Agent API
+      - Find the answer key for any module
+
+  - id: M1
+    step_dir: 01-setup
+    title: "Set up and smoke-test"
+    draft_ids: [B0]
+    typical_time: 15
+    quiz_count: 5
+    standalone: true
+    objectives:
+      - Prove this machine can reach Deepgram and move audio both ways
+      - Explain why one API key covers the LLM as well
+      - Read the browser's report on microphone and echo cancellation
+
+  - id: M2
+    step_dir: 02-connect
+    title: "Settings and the event lifecycle"
+    draft_ids: [B2]
+    typical_time: 20
+    quiz_count: 5
+    objectives:
+      - Open the WebSocket and send a valid Settings message
+      - Read Welcome and SettingsApplied
+      - Narrate the server events of one conversational turn
+
+  - id: M3
+    step_dir: 03-hear-the-agent
+    title: "Hearing the agent: Flux TTS output"
+    draft_ids: [B2, B4]
+    typical_time: 25
+    quiz_count: 5
+    objectives:
+      - Route Flux TTS audio to a speaker
+      - Explain why audio with nowhere to go is audio thrown away
+      - Explain why a handler exception drops the call
+
+  - id: M4
+    step_dir: 04-talk-to-the-agent
+    title: "The full loop and turn-taking"
+    draft_ids: [B3]
+    typical_time: 30
+    quiz_count: 5
+    objectives:
+      - Stream microphone audio and hold a conversation
+      - Explain why Flux removes the need for client-side voice activity detection
+      - Describe how Flux scores end-of-turn confidence inside the model
+
+  - id: M5
+    step_dir: 05-barge-in
+    title: "Interruption done right"
+    draft_ids: [B4]
+    typical_time: 25
+    quiz_count: 5
+    objectives:
+      - Stop playback the moment the caller starts speaking
+      - Explain why two queues must be flushed, far before near
+      - Describe what the Voice Agent API reconciles on your behalf
+
+  - id: M6
+    step_dir: 06-make-it-yours
+    title: "Prompting for the ear"
+    draft_ids: [B5]
+    typical_time: 20
+    quiz_count: 5
+    objectives:
+      - Give the agent the Northwind job, personality, and voice
+      - Apply the prompt rules that matter for speech but not for chat
+      - Weigh the latency cost of a larger think model
+
+  - id: M7
+    step_dir: 07-function-calling
+    title: "Function calling"
+    draft_ids: [B6]
+    typical_time: 35
+    quiz_count: 5
+    objectives:
+      - Declare functions and handle FunctionCallRequest and FunctionCallResponse
+      - Explain what omitting endpoint does
+      - Gate an irreversible action behind an explicit confirmation
+      - Return pre-formatted values so the model cannot paraphrase them
+
+  - id: M8
+    step_dir: 08-healthcare
+    title: "Identity, vocabulary, and the PII boundary"
+    draft_ids: [B9]
+    typical_time: 25
+    quiz_count: 5
+    objectives:
+      - Measure what keyterms are worth by emptying the list and comparing
+      - Filter the payload so a value physically cannot be spoken
+      - Design a read-back-and-confirm identity loop
+      - Implement a transfer to a human
+
+  - id: M9
+    step_dir: 09-optimize
+    title: "Turn-taking, latency, and observability"
+    draft_ids: [B3, B10]
+    typical_time: 25
+    quiz_count: 5
+    objectives:
+      - Tune eot_threshold and eot_timeout_ms for an audio environment
+      - Read the LatencyReport stream, find total_latency, and say which stage cost what
+      - Capture request_id and tags to correlate logs with the Console
+
+  - id: M10
+    step_dir: 10-final
+    title: "The reference agent, the capstone, and what's next"
+    draft_ids: [B11, B12]
+    typical_time: 20
+    doc_only: true
+    quiz_count: 0
+    doc_name: README.md
+    objectives:
+      - Locate every concern in the finished agent
+      - Submit the capstone against the rubric
+      - Know where the docs, templates, and community are
+
+  - id: A1
+    step_dir: 06b-bring-your-own-llm
+    title: "Appendix A, Bring your own LLM"
+    draft_ids: []
+    typical_time: 15
+    optional: true
+    quiz_count: 0
+    exempt_from:
+      - quiz
+      - script
+    objectives:
+      - Move the think stage to a model in your own AWS account
+      - Explain what a brokered provider does that a bring-your-own provider does not
+
+# The answer-key chain: each entry is the finished state of the one before it.
+# 01-setup is a standalone environment checker; A1 is a detour off M6 and
+# carries its own answer key in its lab.
+chain:
+  - 02-connect
+  - 03-hear-the-agent
+  - 04-talk-to-the-agent
+  - 05-barge-in
+  - 06-make-it-yours
+  - 07-function-calling
+  - 08-healthcare
+  - 09-optimize
+  - 10-final
